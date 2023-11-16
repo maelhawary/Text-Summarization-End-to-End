@@ -5,7 +5,7 @@ from langchain.chains.summarize import load_summarize_chain
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from transformers import pipeline
 import torch
-import base64
+import pdfplumber
 import tempfile
 
 ### model and tokenizer
@@ -44,17 +44,13 @@ def llm_pipeline(filepath):
     return result
 
 ## streamlit code
-@st.cache_data
-def displayPDF(file):
-    # Opening file from file path
-    with open(file, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+def read_pdf(file):
+    with pdfplumber.open(file) as pdf:
+        text = ""
+        for page in pdf.pages:
+            text += page.extract_text()
+    return text
 
-    # Embedding PDF in HTML
-    pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-
-    # Displaying File
-    st.markdown(pdf_display, unsafe_allow_html=True)
 
 ## streamlit code
 st.set_page_config(layout='wide',page_title='Summarization APP')
@@ -65,7 +61,7 @@ def main():
     if uploaded_file is not None:
         if st.button("summarize"):
             col1,col2=st.columns(2)
-            filepath ="data/"+uploaded_file.name
+            filepath =uploaded_file.name
            # with open (filepath, 'wb') as temp_file:
             #    temp_file.write(uploaded_file.read())
             with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
@@ -73,7 +69,9 @@ def main():
                 filepath = tmp_file.name
             with col1:
                 st.info("Uploaded File")
-                pdf_viewer=displayPDF(filepath)
+                st.write("PDF content:")
+                text = read_pdf(filepath)
+                st.text(text)
             with col2:
                 st.info("Summarization is below")
                 summary=llm_pipeline(filepath)
