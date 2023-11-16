@@ -3,4 +3,3 @@ langchain
 transformers
 torch
 pdfplumber
-tempfile
