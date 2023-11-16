@@ -1,0 +1,6 @@
+streamlit
+langchain
+transformers
+torch
+base64
+tempfile
