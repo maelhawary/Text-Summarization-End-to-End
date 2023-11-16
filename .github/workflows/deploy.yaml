@@ -64,7 +64,7 @@ jobs:
         fi
 
     - name: Build and Push Docker Image-if-not-exist
-      if: steps.check-docker-hub-image.outputs.image_exists == 'false'
+      if: steps.check-docker-hub-image.outputs.image_exists == 'true'
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest . 
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
