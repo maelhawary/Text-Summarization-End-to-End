@@ -2,5 +2,5 @@ streamlit
 langchain
 transformers
 torch
-base64
+pdfplumber
 tempfile
