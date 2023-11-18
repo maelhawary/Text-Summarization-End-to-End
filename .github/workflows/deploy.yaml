@@ -67,7 +67,7 @@ jobs:
    
     - name: Pull Docker Image
       run: |
-        docker pull -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest . 
+        docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest . 
      
     - name: Run Docker Image on AWS EC2
       run: |
