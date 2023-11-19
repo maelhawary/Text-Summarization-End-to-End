@@ -25,7 +25,20 @@ jobs:
 
       - name: Run unit tests
         run: echo "Running unit tests"
-
+        
+      - name: Login to Docker Hub
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+        env:
+          DOCKER_USERNAME:  ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
+  
+  
+      - name: Build and Push Docker Image-if-not-exist
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest . 
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
+          docker image rm -f ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
+     
   build-and-push-docker-image:
     name: Continuous Delivery
     needs: integration
@@ -47,13 +60,6 @@ jobs:
         DOCKER_USERNAME:  ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
 
-
-    - name: Build and Push Docker Image-if-not-exist
-      run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest . 
-        docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
-        docker image rm -f ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
-   
     - name: Pull Docker Image
       run: |
         docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest 
