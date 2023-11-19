@@ -60,7 +60,7 @@ jobs:
      
     - name: Run Docker Image on AWS EC2
       run: |
-        docker run -d -p 8505:8501 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
+        docker run -d -p 8000:8501 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.Docker_REPOSITORY_NAME }}:latest
     - name: Clean previous images and containers
       run: |
         docker system prune -f
