@@ -1,5 +1,7 @@
+sentencepiece
 streamlit
 langchain
 transformers
 torch
 pdfplumber
+accelerate

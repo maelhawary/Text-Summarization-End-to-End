@@ -1,16 +1,15 @@
 import streamlit as st
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader, DirectoryLoader
-from langchain.chains.summarize import load_summarize_chain
+from langchain.document_loaders import PyPDFLoader
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from transformers import pipeline
 import torch
 import pdfplumber
 import tempfile
 
-### model and tokenizer
 
-checkpoint = "MBZUAI/LaMini-Flan-T5-248M"
+### model and tokenizer
+checkpoint = "LaMini-Flan-T5-248M"
 tokenizer=T5Tokenizer.from_pretrained(checkpoint)
 base_model=T5ForConditionalGeneration.from_pretrained(checkpoint,device_map='auto', torch_dtype=torch.float32)
 
