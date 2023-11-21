@@ -1,6 +1,6 @@
 # Text-Summarization-End-to-End
 
-This LLm project provides text summarization for any PDF context.
+This is an LLm project for text summarization of any PDF context. The End-to-End project is based on lmm model called LaMini‑Flan‑T5‑248M. the project includes the following packages: Langchain and Huggingface for data preprocessing and model implementation, Docker for containarization, AWS EC2 for deployment, Github action for CI/CD, and Streamlit for webapp interface. 
 
 # To use
 1. Lunch and connect your AWS EC2 instance, add the following context to the secrects actions: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
