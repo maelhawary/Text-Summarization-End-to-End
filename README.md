@@ -6,7 +6,6 @@ This is an LLM project for text summarization of any PDF context. The LLM model 
 1. Lunch and connect your AWS EC2 instance, add the following context to the secrects actions: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
 2. Add the self-hosted runner commands from Github to your EC2 instance.
 3. Install docker on your EC2 instance as follows:
-4. 
 ```bash
     sudo apt-get update -y
     sudo apt-get upgrade
